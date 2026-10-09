@@ -133,9 +133,9 @@ function ProgresoLoteBar({ progreso }: Readonly<{ progreso: ProgresoLoteResponse
   if (!progreso) return null;
   return (
     <div className="space-y-1">
-      <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+      <div className="progress-track">
         <div
-          className="h-full rounded-full bg-emerald-600 transition-all duration-500"
+          className="progress-fill"
           style={{
             width:
               progreso.total > 0 ? `${Math.round((progreso.procesados / progreso.total) * 100)}%` : '0%',
@@ -143,7 +143,7 @@ function ProgresoLoteBar({ progreso }: Readonly<{ progreso: ProgresoLoteResponse
         />
       </div>
       {progreso.actual_doc && (
-        <p className="text-xs text-gray-500">
+        <p className="text-xs page-muted">
           Consultando {progreso.actual_doc}
           {progreso.estado_actual ? ` · ${progreso.estado_actual}` : ''}…
         </p>
@@ -173,35 +173,22 @@ const ESTADO_LABEL: Record<string, string> = {
 };
 
 const ESTADO_BADGE: Record<string, string> = {
-  ENCONTRADO:
-    'inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200',
-  NO_ENCONTRADO:
-    'inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-900 dark:bg-amber-900/50 dark:text-amber-200',
-  NO_VERIFICADO:
-    'inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200',
+  ENCONTRADO: 'chip chip-ok !px-2.5 !py-0.5 text-xs',
+  NO_ENCONTRADO: 'chip chip-warn !px-2.5 !py-0.5 text-xs',
+  NO_VERIFICADO: 'chip chip-bad !px-2.5 !py-0.5 text-xs',
 };
 
 function pillTotal(n: number) {
-  return (
-    <span className="rounded-full bg-slate-200 px-3 py-1 text-slate-900 dark:bg-slate-700 dark:text-slate-100">
-      Total: {n}
-    </span>
-  );
+  return <span className="chip">Total: {n}</span>;
 }
 
 function pillsResumen(res: { total: number; encontrados: number; no_encontrados: number; no_verificados: number }) {
   return (
     <div className="flex flex-wrap gap-2 text-sm">
       {pillTotal(res.total)}
-      <span className="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200">
-        Encontrados: {res.encontrados}
-      </span>
-      <span className="rounded-full bg-amber-100 px-3 py-1 font-medium text-amber-950 dark:bg-amber-900/40 dark:text-amber-200">
-        No encontrados: {res.no_encontrados}
-      </span>
-      <span className="rounded-full bg-rose-100 px-3 py-1 font-medium text-rose-900 dark:bg-rose-900/40 dark:text-rose-200">
-        No verificados: {res.no_verificados}
-      </span>
+      <span className="chip chip-ok">Encontrados: {res.encontrados}</span>
+      <span className="chip chip-warn">No encontrados: {res.no_encontrados}</span>
+      <span className="chip chip-bad">No verificados: {res.no_verificados}</span>
     </div>
   );
 }
@@ -261,10 +248,10 @@ export const ComplementariosInscripcionesPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+        <h1 className="page-title">
           <AcademicCapIcon className="w-7 h-7" aria-hidden /> Sofía · Fase 2 · Programas de formación
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">
+        <p className="page-lead">
           Consulta en SENA Sofía Plus las inscripciones y filtra por nombre del programa. Si viene de Fase 1, el tipo de
           documento ya está detectado (no se vuelve a probar).
         </p>
@@ -286,8 +273,8 @@ export const ComplementariosInscripcionesPage = () => {
           <CargaMasivaPanel />
         </div>
         <aside className="space-y-4">
-          <div className="card text-sm text-gray-600 dark:text-gray-400 space-y-2">
-            <h3 className="font-semibold text-gray-900 dark:text-white">Cómo funciona</h3>
+          <div className="card text-sm page-muted space-y-2">
+            <h3 className="font-semibold" style={{ color: 'var(--ink)' }}>Cómo funciona</h3>
             <ol className="list-decimal pl-5 space-y-1">
               <li>
                 Guarde el <strong>número de documento SENA</strong> y contraseña Sofía (no el correo del sistema).
@@ -362,9 +349,9 @@ const ContinuacionFase1Panel = ({
   };
 
   return (
-    <div className="card space-y-4 border border-emerald-300 dark:border-emerald-700 bg-emerald-50/50 dark:bg-emerald-950/30">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Continuar desde Fase 1</h2>
-      <p className="text-sm text-gray-700 dark:text-gray-300">
+    <div className="card card-accent space-y-4">
+      <h2 className="text-lg font-semibold">Continuar desde Fase 1</h2>
+      <p className="text-sm page-muted">
         {documentos.length} persona(s) registrada(s) en Sofía con tipo ya detectado. Indique el programa y consulte sin
         volver a probar tipos de documento.
       </p>
@@ -383,7 +370,7 @@ const ContinuacionFase1Panel = ({
                 key={`${d.tipo_documento}-${d.numero_documento}`}
                 className="border-b border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
               >
-                <td className="py-1 pr-3 font-medium text-emerald-800 dark:text-emerald-300">{d.tipo_documento}</td>
+                <td className="py-1 pr-3 font-medium msg-ok">{d.tipo_documento}</td>
                 <td className="py-1 pr-3 font-medium">{d.numero_documento}</td>
                 <td className="py-1 text-gray-800 dark:text-gray-200">
                   {d.nombre || [d.nombres, d.primer_apellido, d.segundo_apellido].filter(Boolean).join(' ') || '—'}
@@ -442,7 +429,7 @@ const ContinuacionFase1Panel = ({
               Reintenta solo los «No verificados» (ej. caída de red). «Encontrado» y «No encontrado» son definitivos.
             </span>
           </div>
-          <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-600">
+          <div className="table-neo p-2">
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-800/80 border-b border-gray-200 dark:border-gray-600">
@@ -569,18 +556,18 @@ const CredencialesPanel = () => {
   if (estado?.tiene && !editando) {
     return (
       <div className="card space-y-3">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+        <h2 className="text-lg font-semibold flex items-center gap-2">
           <KeyIcon className="w-5 h-5" aria-hidden /> Credenciales SENA Sofía
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
           Guarda en <code className="text-xs">sofia_credenciales</code> (tabla aparte). No es el usuario con el que
           entró a CDATTG.
         </p>
-        <p className="text-sm text-green-700 dark:text-green-400">
+        <p className="text-sm msg-ok">
           Documento Sofía activo: <strong>{estado.usuario}</strong>
           {estado.actualizada_en ? ` · actualizada ${estado.actualizada_en}` : ''}
         </p>
-        {msg && <p className="text-sm text-green-700 dark:text-green-400">{msg}</p>}
+        {msg && <p className="text-sm msg-ok">{msg}</p>}
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
         <div className="flex flex-wrap gap-2">
           <button
@@ -613,7 +600,7 @@ const CredencialesPanel = () => {
 
   return (
     <form onSubmit={guardar} className="card space-y-4" autoComplete="off">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+      <h2 className="text-lg font-semibold flex items-center gap-2">
         <KeyIcon className="w-5 h-5" aria-hidden /> Credenciales SENA Sofía
       </h2>
       <p className="text-sm text-amber-700 dark:text-amber-300 flex items-start gap-1">
@@ -692,7 +679,7 @@ const CredencialesPanel = () => {
       </div>
 
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-      {msg && <p className="text-sm text-green-700 dark:text-green-400">{msg}</p>}
+      {msg && <p className="text-sm msg-ok">{msg}</p>}
 
       <div className="flex flex-wrap gap-2">
         <button type="submit" className="btn-primary" disabled={loading}>
@@ -764,7 +751,7 @@ const ConsultaPanel = ({ prefijoFase1 }: Readonly<{ prefijoFase1: Fase1HandoffDo
 
   return (
     <form onSubmit={consultar} className="card space-y-4">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+      <h2 className="text-lg font-semibold flex items-center gap-2">
         <MagnifyingGlassIcon className="w-5 h-5" aria-hidden /> Consulta individual
       </h2>
 
@@ -938,7 +925,7 @@ const CargaMasivaPanel = () => {
 
   return (
     <div className="card space-y-4">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+      <h2 className="text-lg font-semibold flex items-center gap-2">
         <ArrowUpTrayIcon className="w-5 h-5" aria-hidden /> Carga masiva por Excel
       </h2>
       <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -961,7 +948,7 @@ const CargaMasivaPanel = () => {
           accept=".xlsx"
           onChange={handleFile}
           disabled={procesando}
-          className="text-sm text-gray-700 dark:text-gray-300 file:mr-3 file:rounded-lg file:border-0 file:bg-gray-200 file:px-3 file:py-1.5 file:text-gray-800 dark:file:bg-gray-700 dark:file:text-gray-100"
+          className="file-neo"
         />
       </div>
 
@@ -1008,7 +995,7 @@ const CargaMasivaPanel = () => {
               <ArrowDownTrayIcon className="w-4 h-4" aria-hidden /> Descargar resultados (CSV)
             </button>
           </div>
-          <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-600">
+          <div className="table-neo p-2">
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-800/80 border-b border-gray-200 dark:border-gray-600">
@@ -1048,34 +1035,37 @@ const CargaMasivaPanel = () => {
 };
 
 const ResultadoInscripciones = ({ res }: Readonly<{ res: ConsultarInscripcionesResponse }>) => {
-  let icon = <ExclamationTriangleIcon className="w-6 h-6 text-red-600" aria-hidden />;
+  let icon = <ExclamationTriangleIcon className="w-6 h-6 icon-bad" aria-hidden />;
+  let panel = 'result-panel result-bad';
   if (res.estado === 'ENCONTRADO') {
-    icon = <CheckCircleIcon className="w-6 h-6 text-green-600" aria-hidden />;
+    icon = <CheckCircleIcon className="w-6 h-6 icon-ok" aria-hidden />;
+    panel = 'result-panel result-ok';
   } else if (res.estado === 'NO_ENCONTRADO') {
-    icon = <XCircleIcon className="w-6 h-6 text-amber-600" aria-hidden />;
+    icon = <XCircleIcon className="w-6 h-6 icon-warn" aria-hidden />;
+    panel = 'result-panel result-warn';
   }
 
   return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3">
+    <div className={`${panel} space-y-3`}>
       <div className="flex items-start gap-2">
         {icon}
         <div>
-          <p className="font-semibold text-gray-900 dark:text-white">
+          <p className="font-semibold">
             {ESTADO_LABEL[res.estado] ?? res.estado}
             {res.tipo_encontrado ? ` · ${res.tipo_encontrado}` : ''}
           </p>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm page-muted">
             Documento {res.numero_documento} · Programa {res.programa_consultado}
           </p>
-          {res.mensaje && <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{res.mensaje}</p>}
+          {res.mensaje && <p className="text-sm page-muted mt-1">{res.mensaje}</p>}
         </div>
       </div>
 
       {res.registros?.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
+        <div className="table-neo p-2">
+          <table>
             <thead>
-              <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+              <tr className="text-left">
                 <th className="py-2 pr-4 font-medium">Ficha</th>
                 <th className="py-2 pr-4 font-medium">Programa de formación</th>
                 <th className="py-2 font-medium">Estado</th>
@@ -1083,10 +1073,10 @@ const ResultadoInscripciones = ({ res }: Readonly<{ res: ConsultarInscripcionesR
             </thead>
             <tbody>
               {res.registros.map((r, i) => (
-                <tr key={`${r.ficha}-${r.estado}-${i}`} className="border-b border-gray-100 dark:border-gray-800">
-                  <td className="py-2 pr-4 text-gray-900 dark:text-white">{r.ficha}</td>
-                  <td className="py-2 pr-4 text-gray-900 dark:text-white">{r.programa}</td>
-                  <td className="py-2 text-gray-900 dark:text-white">{r.estado}</td>
+                <tr key={`${r.ficha}-${r.estado}-${i}`}>
+                  <td className="py-2 pr-4 font-medium">{r.ficha}</td>
+                  <td className="py-2 pr-4">{r.programa}</td>
+                  <td className="py-2">{r.estado}</td>
                 </tr>
               ))}
             </tbody>

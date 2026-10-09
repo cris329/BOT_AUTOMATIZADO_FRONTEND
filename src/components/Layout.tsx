@@ -1,5 +1,5 @@
 /**
- * Layout CDATTG (header + sidebar FPI + breadcrumb + tema).
+ * Shell neomorfo: header, sidebar FPI, miga y toggle de tema.
  *
  * @author Cristian Deysdayr Jiménez
  */
@@ -25,8 +25,8 @@ const FPI = [
 
 const crumb: Record<string, string[]> = {
   [complementariosPaths.betowa]: ['Inicio', 'Complementarios', 'Betowa'],
-  [complementariosPaths.consultarRegistro]: ['Inicio', 'Complementarios', 'Fase 1 - Consultar Registro'],
-  [complementariosPaths.inscripciones]: ['Inicio', 'Complementarios', 'Fase 2 - Programas'],
+  [complementariosPaths.consultarRegistro]: ['Inicio', 'Complementarios', 'Fase 1'],
+  [complementariosPaths.inscripciones]: ['Inicio', 'Complementarios', 'Fase 2'],
 };
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -39,50 +39,57 @@ export function Layout({ children }: { children: ReactNode }) {
   const crumbs = crumb[pathname] ?? ['Inicio', 'Complementarios'];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <nav className="border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+    <div className="neo-app">
+      <nav className="nav-shell sticky top-0 z-30">
         <div className="flex h-14 items-center justify-between px-3 sm:px-4">
-          <button type="button" className="p-2 text-gray-600 dark:text-gray-300" onClick={() => setOpen((v) => !v)} aria-label="Menú">
+          <button type="button" className="icon-btn md:hidden" onClick={() => setOpen((v) => !v)} aria-label="Menú">
             <Bars3Icon className="h-5 w-5" />
           </button>
-          <div className="flex items-center gap-1">
-            <button type="button" onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300" aria-label="Tema">
-              {theme === 'light' ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5 text-yellow-400" />}
+          <Link to={complementariosPaths.consultarRegistro} className="hidden text-sm font-bold tracking-tight md:block" style={{ color: 'var(--ink)' }}>
+            Bot Automatizado
+          </Link>
+          <div className="flex items-center gap-2">
+            <button type="button" onClick={toggleTheme} className="icon-btn" aria-label="Tema">
+              {theme === 'light' ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
             </button>
-            <span className="px-3 text-xs font-semibold uppercase tracking-wide text-gray-700 dark:text-gray-200">{rolesLine}</span>
-            <button type="button" className="btn-secondary text-xs" onClick={logout}>Salir</button>
+            <span className="chip text-xs uppercase tracking-wide">{rolesLine}</span>
+            <button type="button" className="btn-secondary text-xs !py-2 !px-3" onClick={logout}>
+              Salir
+            </button>
           </div>
         </div>
       </nav>
 
-      {open ? <button type="button" className="fixed inset-0 z-40 bg-black/50 md:hidden" aria-label="Cerrar" onClick={() => setOpen(false)} /> : null}
+      {open ? (
+        <button type="button" className="fixed inset-0 z-40 md:hidden" style={{ background: 'var(--overlay)' }} aria-label="Cerrar" onClick={() => setOpen(false)} />
+      ) : null}
 
       <div className="flex">
-        <aside className={`fixed inset-y-0 left-0 z-50 w-64 transform border-r border-gray-200 bg-white pt-14 transition dark:border-gray-700 dark:bg-gray-800 md:static md:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
+        <aside
+          className={`aside-shell fixed inset-y-0 left-0 z-50 w-64 transform pt-16 transition md:static md:translate-x-0 md:pt-0 ${
+            open ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
           <div className="px-3 py-4">
-            <Link to={complementariosPaths.consultarRegistro} className="mb-4 block px-2 text-sm font-bold text-gray-900 dark:text-white">
-              Sofía Consulta
-            </Link>
-            <button type="button" onClick={() => setFpiOpen((v) => !v)} className="flex w-full items-center justify-between rounded-md px-2 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400">
-              <span>FPI</span>
+            <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider page-muted">Módulo FPI</p>
+            <button
+              type="button"
+              onClick={() => setFpiOpen((v) => !v)}
+              className="mb-1 flex w-full items-center justify-between rounded-xl px-2 py-2 text-xs font-semibold page-muted"
+            >
+              <span>Consultas</span>
               <ChevronDownIcon className={`h-4 w-4 transition ${fpiOpen ? '' : '-rotate-90'}`} />
             </button>
             {fpiOpen ? (
-              <div className="mt-0.5 space-y-0.5">
+              <div className="space-y-1">
                 {FPI.map((item) => (
                   <NavLink
                     key={item.path}
                     to={item.path}
                     onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors border-l-[3px] ${
-                        isActive
-                          ? 'border-primary-600 bg-primary-50 font-medium text-primary-800 dark:border-primary-400 dark:bg-primary-900/30 dark:text-primary-200 pl-[9px]'
-                          : 'border-transparent text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700/80 pl-[9px]'
-                      }`
-                    }
+                    className={({ isActive }) => `nav-item pl-[9px] ${isActive ? 'nav-item-active' : ''}`}
                   >
-                    <IdentificationIcon className="w-5 h-5 shrink-0" />
+                    <IdentificationIcon className="h-5 w-5 shrink-0" />
                     <span className="truncate">{item.label}</span>
                   </NavLink>
                 ))}
@@ -91,13 +98,15 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         </aside>
 
-        <main className="min-w-0 flex-1 p-4 dark:bg-gray-900 sm:p-6">
-          <nav aria-label="Miga de pan" className="mb-4">
-            <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+        <main className="min-w-0 flex-1 p-4 sm:p-6">
+          <nav aria-label="Miga de pan" className="mb-5">
+            <ol className="flex flex-wrap items-center gap-2 text-sm page-muted">
               {crumbs.map((c, i) => (
                 <li key={c} className="inline-flex items-center gap-2">
                   {i !== 0 ? <span aria-hidden>/</span> : null}
-                  <span className={i === crumbs.length - 1 ? 'font-medium text-gray-900 dark:text-white' : ''}>{c}</span>
+                  <span className={i === crumbs.length - 1 ? 'font-semibold' : ''} style={i === crumbs.length - 1 ? { color: 'var(--ink)' } : undefined}>
+                    {c}
+                  </span>
                 </li>
               ))}
             </ol>

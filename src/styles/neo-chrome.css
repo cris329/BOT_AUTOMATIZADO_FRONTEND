@@ -1,0 +1,132 @@
+/**
+ * Chrome neomorfo: fondo, nav, títulos, chips y tablas.
+ *
+ * @author Cristian Deysdayr Jiménez
+ */
+
+.neo-app {
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 50%),
+    var(--surface);
+  color: var(--ink);
+  font-family: var(--font);
+}
+
+.page-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.page-lead {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.page-muted {
+  color: var(--muted);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--inset);
+  background: var(--field);
+  color: var(--ink);
+}
+
+.progress-track {
+  height: 0.5rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--surface-2);
+  box-shadow: var(--inset);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+  background: linear-gradient(90deg, var(--accent-strong), var(--accent));
+}
+
+.table-neo {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--inset);
+  background: var(--result);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+}
+
+.table-neo table {
+  width: 100%;
+  font-size: 0.875rem;
+}
+
+.table-neo thead tr {
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+.table-neo tbody tr {
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.nav-shell {
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--raised-sm);
+  border-bottom: 1px solid var(--line);
+}
+
+.aside-shell {
+  background: var(--card);
+  border-right: 1px solid var(--line);
+  box-shadow: var(--raised-sm);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  transition: background var(--ease), box-shadow var(--ease), color var(--ease);
+  border-left: 3px solid transparent;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: var(--field);
+  color: var(--ink);
+  box-shadow: var(--inset);
+}
+
+.nav-item-active {
+  border-left-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-weight: 600;
+  box-shadow: var(--inset);
+}
+
+html.dark .nav-item-active {
+  color: var(--accent);
+}

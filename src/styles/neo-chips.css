@@ -1,0 +1,36 @@
+/**
+ * Chips de estado con verde/rojo más definidos (no pastel lavado).
+ *
+ * @author Cristian Deysdayr Jiménez
+ */
+
+.chip-ok {
+  background: color-mix(in srgb, var(--ok) 28%, #ffffff);
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.chip-bad {
+  background: color-mix(in srgb, var(--danger) 22%, #ffffff);
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.chip-warn {
+  background: color-mix(in srgb, var(--warn) 24%, #ffffff);
+  color: var(--warn);
+  font-weight: 700;
+}
+
+html.dark .chip-ok {
+  background: color-mix(in srgb, var(--ok) 28%, var(--card));
+  color: var(--ok);
+}
+
+html.dark .chip-bad {
+  background: color-mix(in srgb, var(--danger) 22%, var(--card));
+}
+
+html.dark .chip-warn {
+  background: color-mix(in srgb, var(--warn) 24%, var(--card));
+}

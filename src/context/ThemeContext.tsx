@@ -1,5 +1,5 @@
 /**
- * Tema claro/oscuro (clase `.dark` en html) — igual CDATTG.
+ * Tema claro/oscuro (clase `.dark` en html) para el neomorfismo.
  *
  * @author Cristian Deysdayr Jiménez
  */
@@ -10,7 +10,7 @@ type Theme = 'light' | 'dark';
 type Ctx = { theme: Theme; toggleTheme: () => void };
 
 const ThemeCtx = createContext<Ctx | null>(null);
-const KEY = 'cdattg-theme';
+const KEY = 'bot-automatizado-theme';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
