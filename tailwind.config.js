@@ -4,21 +4,23 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Manrope', 'Segoe UI', 'sans-serif'],
-      },
       colors: {
         primary: {
-          50: '#eef8f7',
-          100: '#d2ebe7',
-          200: '#a8d9d2',
-          300: '#6fc4b9',
-          400: '#3dbaae',
-          500: '#1a6b63',
-          600: '#145a54',
-          700: '#114a45',
-          800: '#0e3b37',
-          900: '#0a2c29',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+        },
+        sena: {
+          green: '#39b54a',
+          dark: '#1e3a5f',
+          orange: '#f97316',
         },
       },
     },

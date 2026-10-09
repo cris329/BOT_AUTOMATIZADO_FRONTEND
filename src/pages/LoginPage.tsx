@@ -1,6 +1,5 @@
 /**
- * Login premium neomorfo (claro/oscuro).
- * Lo hice con marca elevada y campos hundidos para sensación de producto serio.
+ * Login (tarjeta sobre fondo CDATTG dark/light).
  *
  * @author Cristian Deysdayr Jiménez
  */
@@ -18,11 +17,8 @@ export function LoginPage() {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  if (!loading && user) {
-    return <Navigate to={complementariosPaths.consultarRegistro} replace />;
-  }
+  if (!loading && user) return <Navigate to={complementariosPaths.consultarRegistro} replace />;
 
-  /** Envío credenciales al API y muestro error legible. */
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -37,58 +33,22 @@ export function LoginPage() {
   }
 
   return (
-    <div className="neo-app flex items-center justify-center p-4">
-      <form onSubmit={onSubmit} className="card w-full max-w-md space-y-5">
-        <div className="text-center">
-          <div className="brand-mark" aria-hidden>
-            BA
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--ink)' }}>
-            Bot Automatizado
-          </h1>
-          <p className="page-lead">Consulta Sofía · acceso seguro</p>
-        </div>
-
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+      <form onSubmit={onSubmit} className="card w-full max-w-md space-y-4">
         <div>
-          <label className="mb-1.5 block text-sm font-medium page-muted" htmlFor="email">
-            Email
-          </label>
-          <input
-            id="email"
-            className="input-field"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="username"
-          />
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Iniciar sesión</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Módulo FPI · Sofía Consulta</p>
         </div>
-
         <div>
-          <label className="mb-1.5 block text-sm font-medium page-muted" htmlFor="pass">
-            Contraseña
-          </label>
-          <input
-            id="pass"
-            className="input-field"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-            autoComplete="current-password"
-          />
+          <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>
+          <input id="email" className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
-
-        {error ? (
-          <p className="text-sm font-medium" style={{ color: 'var(--danger)' }}>
-            {error}
-          </p>
-        ) : null}
-
-        <button type="submit" className="btn-primary w-full" disabled={busy}>
-          {busy ? 'Entrando…' : 'Entrar'}
-        </button>
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="pass">Contraseña</label>
+          <input id="pass" className="input-field" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+        </div>
+        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        <button type="submit" className="btn-primary w-full" disabled={busy}>{busy ? 'Entrando…' : 'Entrar'}</button>
       </form>
     </div>
   );

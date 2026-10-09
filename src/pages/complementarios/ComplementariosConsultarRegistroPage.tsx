@@ -77,10 +77,10 @@ export const ComplementariosConsultarRegistroPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="page-title">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <DocumentMagnifyingGlassIcon className="w-7 h-7" aria-hidden /> Sofía · Fase 1 · Consultar Registro
         </h1>
-        <p className="page-lead">
+        <p className="text-gray-600 dark:text-gray-400 mt-1">
           Verifica si la persona está inscrita en SENA Sofía Plus (rol Encargado de ingreso → SGS → Consultar Registro).
           Los registrados pueden continuar a la Fase 2 (programas de formación) con el tipo ya detectado.
         </p>
@@ -93,8 +93,8 @@ export const ComplementariosConsultarRegistroPage = () => {
           <CargaMasivaPanel />
         </div>
         <aside className="space-y-4">
-          <div className="card text-sm page-muted space-y-2">
-            <h3 className="font-semibold" style={{ color: 'var(--ink)' }}>Cómo funciona</h3>
+          <div className="card text-sm text-gray-600 dark:text-gray-400 space-y-2">
+            <h3 className="font-semibold text-gray-900 dark:text-white">Cómo funciona</h3>
             <ol className="list-decimal pl-5 space-y-1">
               <li>Login Sofía con credenciales guardadas.</li>
               <li>
@@ -204,22 +204,22 @@ const CredencialesPanel = () => {
   if (estado?.tiene && !editando) {
     return (
       <div className="card space-y-3">
-        <h2 className="text-lg font-semibold flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
           <KeyIcon className="w-5 h-5" aria-hidden /> Credenciales SENA Sofía
         </h2>
-        <p className="text-sm msg-ok">
+        <p className="text-sm text-green-700 dark:text-green-400">
           Documento operador: <strong>{estado.usuario}</strong>
           {estado.tipo_documento ? ` · ${estado.tipo_documento}` : ''}
         </p>
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Fase 1 usa el rol Encargado de ingreso automáticamente (aunque la credencial se haya guardado desde Fase 2).
         </p>
-        {msg && <p className="text-sm msg-ok">{msg}</p>}
+        {msg && <p className="text-sm text-green-700 dark:text-green-400">{msg}</p>}
         <div className="flex flex-wrap gap-2">
           <button type="button" className="btn-secondary inline-flex items-center gap-1" onClick={() => setEditando(true)}>
             <PencilSquareIcon className="w-4 h-4" aria-hidden /> Cambiar
           </button>
-          <button type="button" className="btn-danger inline-flex items-center gap-1" onClick={eliminar} disabled={loading}>
+          <button type="button" className="btn-secondary inline-flex items-center gap-1 text-red-700" onClick={eliminar} disabled={loading}>
             <TrashIcon className="w-4 h-4" aria-hidden /> Eliminar
           </button>
         </div>
@@ -229,7 +229,7 @@ const CredencialesPanel = () => {
 
   return (
     <form onSubmit={guardar} className="card space-y-4" autoComplete="off">
-      <h2 className="text-lg font-semibold flex items-center gap-2">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
         <KeyIcon className="w-5 h-5" aria-hidden /> Credenciales SENA Sofía
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -274,7 +274,7 @@ const CredencialesPanel = () => {
         </div>
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
-      {msg && <p className="text-sm msg-ok">{msg}</p>}
+      {msg && <p className="text-sm text-green-700">{msg}</p>}
       <button type="submit" className="btn-primary" disabled={loading}>
         {loading ? 'Guardando…' : 'Guardar credenciales'}
       </button>
@@ -327,7 +327,7 @@ const ConsultaIndividualPanel = () => {
 
   return (
     <form onSubmit={consultar} className="card space-y-4">
-      <h2 className="text-lg font-semibold flex items-center gap-2">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
         <MagnifyingGlassIcon className="w-5 h-5" aria-hidden /> Consulta individual
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -584,7 +584,7 @@ const CargaMasivaPanel = () => {
 
   return (
     <div className="card space-y-4">
-      <h2 className="text-lg font-semibold flex items-center gap-2">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
         <ArrowUpTrayIcon className="w-5 h-5" aria-hidden /> Carga masiva (Fase 1)
       </h2>
       <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -625,9 +625,9 @@ const CargaMasivaPanel = () => {
 
       {procesando && progreso && (
         <div className="space-y-1">
-          <div className="progress-track">
-              <div
-              className="progress-fill"
+          <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+            <div
+              className="h-full rounded-full bg-green-600 transition-all duration-500"
               style={{
                 width: progreso.total > 0 ? `${Math.round((progreso.procesados / progreso.total) * 100)}%` : '0%',
               }}
@@ -645,10 +645,10 @@ const CargaMasivaPanel = () => {
       {res && (
         <div className="space-y-3">
           <div className="flex flex-wrap gap-3 text-sm">
-            <span className="chip">Total: {res.total}</span>
-            <span className="chip chip-ok">Registrados: {res.registrados}</span>
-            <span className="chip chip-bad">No registrados: {res.no_registrados}</span>
-            <span className="chip chip-warn">No verificados: {res.no_verificados}</span>
+            <span className="rounded-full bg-gray-100 px-3 py-1 dark:bg-gray-700">Total: {res.total}</span>
+            <span className="rounded-full bg-green-100 px-3 py-1 text-green-800">Registrados: {res.registrados}</span>
+            <span className="rounded-full bg-red-100 px-3 py-1 text-red-800">No registrados: {res.no_registrados}</span>
+            <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-800">No verificados: {res.no_verificados}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {pendientes.length > 0 && (
@@ -675,10 +675,10 @@ const CargaMasivaPanel = () => {
               </>
             )}
           </div>
-          <div className="table-neo p-3">
-            <table>
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
               <thead>
-                <tr className="text-left">
+                <tr className="text-left text-gray-500 border-b">
                   <th className="py-2 pr-3">Documento</th>
                   <th className="py-2 pr-3">Estado</th>
                   <th className="py-2 pr-3">Tipo</th>
@@ -689,7 +689,7 @@ const CargaMasivaPanel = () => {
               </thead>
               <tbody>
                 {res.resultados.map((r) => (
-                  <tr key={r.numero_documento}>
+                  <tr key={r.numero_documento} className="border-b border-gray-100 dark:border-gray-800">
                     <td className="py-2 pr-3 font-medium">{r.numero_documento}</td>
                     <td className="py-2 pr-3">{ESTADO_LABEL[r.estado] ?? r.estado}</td>
                     <td className="py-2 pr-3">{r.tipo_encontrado ?? '—'}</td>
@@ -697,7 +697,7 @@ const CargaMasivaPanel = () => {
                     <td className="py-2 pr-3">
                       {[r.primer_apellido, r.segundo_apellido].filter(Boolean).join(' ') || '—'}
                     </td>
-                    <td className="py-2 page-muted max-w-xs truncate" title={r.mensaje ?? ''}>
+                    <td className="py-2 text-gray-500 dark:text-gray-400 max-w-xs truncate" title={r.mensaje ?? ''}>
                       {r.mensaje || '—'}
                     </td>
                   </tr>
@@ -712,31 +712,31 @@ const CargaMasivaPanel = () => {
 };
 
 const ResultadoCard = ({ r }: { r: VerificarAspiranteResponse }) => {
-  let icon = <ExclamationTriangleIcon className="w-6 h-6 icon-warn" aria-hidden />;
-  let box = 'result-panel result-warn';
+  let icon = <ExclamationTriangleIcon className="w-6 h-6 text-amber-600" aria-hidden />;
+  let box = 'border-amber-300 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20';
   let label = 'No verificado';
   if (r.estado === 'REGISTRADO') {
-    icon = <CheckCircleIcon className="w-6 h-6 icon-ok" aria-hidden />;
-    box = 'result-panel result-ok';
+    icon = <CheckCircleIcon className="w-6 h-6 text-green-600" aria-hidden />;
+    box = 'border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-900/20';
     label = 'Registrado en Sofía Plus';
   } else if (r.estado === 'NO_REGISTRADO') {
-    icon = <XCircleIcon className="w-6 h-6 icon-bad" aria-hidden />;
-    box = 'result-panel result-bad';
+    icon = <XCircleIcon className="w-6 h-6 text-red-600" aria-hidden />;
+    box = 'border-red-300 bg-red-50 dark:border-red-800 dark:bg-red-900/20';
     label = 'No registrado en el sistema';
   }
 
   return (
-    <div className={box}>
+    <div className={`border rounded-lg p-4 ${box}`}>
       <div className="flex items-start gap-2">
         {icon}
         <div className="space-y-1 text-sm">
-          <p className="font-semibold">{label}</p>
+          <p className="font-semibold text-gray-900 dark:text-white">{label}</p>
           <p>Documento: {r.numero_documento}</p>
           {r.tipo_encontrado && <p>Tipo de identificación: {r.tipo_encontrado}</p>}
           {(r.nombres || r.nombre) && <p>Nombres: {r.nombres || r.nombre}</p>}
           {r.primer_apellido && <p>Primer apellido: {r.primer_apellido}</p>}
           {r.segundo_apellido && <p>Segundo apellido: {r.segundo_apellido}</p>}
-          {r.mensaje && <p className="page-muted">{r.mensaje}</p>}
+          {r.mensaje && <p className="text-gray-600 dark:text-gray-400">{r.mensaje}</p>}
         </div>
       </div>
     </div>
