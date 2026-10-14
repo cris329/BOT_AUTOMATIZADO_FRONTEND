@@ -286,7 +286,8 @@ const ConsultaIndividualPanel = () => {
   const navigate = useNavigate();
   const [numero, setNumero] = useState('');
   const [tipo, setTipo] = useState('CC');
-  const [autoTipo, setAutoTipo] = useState(true);
+  // Auto-tipo prueba varios docs (lento). Por defecto tipo fijo ≈ 15 s/doc con sesión caliente.
+  const [autoTipo, setAutoTipo] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [resultado, setResultado] = useState<VerificarAspiranteResponse | null>(null);
@@ -370,8 +371,11 @@ const ConsultaIndividualPanel = () => {
               onChange={(e) => setAutoTipo(e.target.checked)}
               disabled={loading}
             />
-            <span>Probar tipos automáticamente</span>
+            <span>Probar tipos automáticamente (más lento: CC/TI/CE)</span>
           </label>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Con tipo fijo, tras el primer login cada consulta suele tardar unos 15 s.
+          </p>
         </div>
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
